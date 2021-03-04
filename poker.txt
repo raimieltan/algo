@@ -1,0 +1,130 @@
+const readline = require('readline-sync')
+
+
+const checkEquality = (array) => {
+
+    return array.every( item => item === array[0])
+}
+
+const checkKinds = (array) => {
+    let counter = 0;
+
+    for(let i =0; i < array.length; i++){
+        counter = 0
+        for(let j = 0; j < array.length; j++){
+            if(array[j] === array[i]) {
+              
+                counter++
+              
+            }
+        }
+        if(counter >= 4) {
+            return counter
+        }
+        if(counter >= 3) {
+            return counter
+        }
+    }
+    return false
+}
+
+
+
+
+const checkFullHouse = (parentArray) => {
+    let array = [...parentArray]
+    let counter = 0;
+
+    for(let i =0; i < array.length; i++){
+        counter = 0
+        for(let j = 0; j < array.length; j++){
+            if(array[j] === array[i]) {
+              
+                counter++
+              
+            }
+        }
+        if(counter >= 3) {
+     
+            let index = array.indexOf(array[i])
+            for(let x = 0; x < array.length; x++){
+                array.splice(index , 1)
+            }
+    
+         
+            if(array[0] === array[1]){
+                
+                return true
+            }
+            else{
+                return false
+            }
+            
+        }
+    
+    }
+
+}
+
+
+const checkStraight = (array) => {
+    
+    
+    return Boolean( array.reduce( (next, prev) => ( next ? (next + 1 === prev ? prev : false):false ) ))
+
+}
+
+const handConverter = (array) => {
+    for(let i = 0; i < array.length; i++){
+        if(array[i] === 'A'){
+            array[i] = 1
+        }
+        else if(array[i] === 'J'){
+            array[i] = 11
+        }
+        else if(array[i] === 'Q'){
+            array[i] = 12
+        }
+        else if(array[i] === 'K'){
+            array[i] = 13
+        }
+    }
+
+    let parsedArray = []
+    array.forEach(element => {
+        parsedArray.push(parseInt(element))
+    });
+    return parsedArray.sort( (a,b) => a-b)
+}
+
+
+
+let array = []
+
+for(let i = 0; i < 5; i++){
+    const hand = readline.question('Enter Hand: ')
+    array.push(hand)
+}
+
+array = handConverter(array)
+
+
+if(checkStraight(array) )
+{
+    console.log('Straight')
+}
+else if(checkFullHouse(array)){
+    console.log('Full house')
+}
+
+else if(checkKinds(array) === 4){
+   
+    console.log('four of a kind')
+}
+else if(checkKinds(array) === 3){
+    console.log('three of a kind')
+}
+else{
+  
+    console.log("Nothing")
+}

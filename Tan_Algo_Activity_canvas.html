@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<body style="background-color: white;">
+
+<canvas id="myCanvas" width="1000" height="1000" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML canvas tag.</canvas>
+
+<script>
+
+
+
+const init = () => {
+
+
+let ctx = document.getElementById('myCanvas').getContext('2d');
+let numCurves = 5
+
+function petal(cp1, cp2x, cp2y, x, y, d) {
+
+    ctx.globalAlpha = 0.2;
+
+    loop(1, cp1, cp2x, cp2y, x, y, d)
+
+}
+
+function loop(counter, cp1, cp2x, cp2y, x, y, d){
+
+    if(counter>=numCurves){
+        console.log(1)
+    }else{
+        let points = cp1 - counter * d;
+        ctx.fillStyle = 'hsl(' + 360 * Math.random() + ', 100%, 50%)'
+        ctx.beginPath();
+        ctx.moveTo(x, y); //(x,y)
+        ctx.bezierCurveTo(points, points, cp2x, cp2y, x, y);
+        ctx.stroke();
+        ctx.fill();
+        console.log(counter)
+        loop(counter+=1, cp1, cp2x, cp2y, x, y, d)
+    }
+}
+
+
+
+function wings() {
+    petal(20, 400, 20, 200, 200, 10);//y-up
+    petal(20, 20, 400, 200, 200, 10);//x-left
+    petal(400, 400, 20, 200, 200, 10);//x-right
+    petal(400, 20, 400, 200, 200, 10);//x-down
+
+}
+
+function butterfly() {
+
+
+    ctx.ellipse(200, 200, 8, 70, Math.PI / 3.8, 0, 2 * Math.PI);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = 'black';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(245, 160);
+    ctx.quadraticCurveTo(265, 130, 340, 130);
+    ctx.moveTo(245, 160);
+    ctx.quadraticCurveTo(290, 120, 280, 50);
+    ctx.stroke();
+    wings()
+
+}
+
+butterfly()
+
+
+
+}
+ window.onload = init
+
+</script> 
+
+</body>
+</html>

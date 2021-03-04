@@ -1,0 +1,73 @@
+const readline = require('readline-sync')
+
+let input = Number(readline.question('Enter number: '))
+
+n = input * 2
+for(let row = 1; row <= input; row ++){
+    let xCount = 1;
+    let slashCount = 2;
+    for(let col = 1; col <= n; col++){
+        
+        if(row == 1 && col >= input && col !== n){
+            process.stdout.write(':')
+        }
+        else if ( col == n){
+            process.stdout.write(' ')
+        }
+        else if( (row + col) === input + 1){
+            process.stdout.write(':')
+        }
+        else if( (row + col) === n){
+            process.stdout.write(':')
+        }
+        
+        else if ( row == input && col <= input){
+            process.stdout.write(':')
+        }
+        
+        else if( (row + col) === input + row - (row -slashCount ) ){
+            process.stdout.write('/')
+            slashCount++
+        }
+        else if( row <= input && col == n -1){
+            process.stdout.write(':')
+        }
+        
+        else if( (row + col) === n + ( col - ( col - xCount ) ) ){
+            process.stdout.write('X')
+            xCount++
+        }
+
+        else{
+            process.stdout.write(' ')
+        }
+        
+    }
+    console.log('')
+}
+
+for(let row = 1; row <= input -1; row++){
+    let xCount = 1;
+    for(let col = 1; col <= n; col++){
+        if(col == 1 || col == input){
+            process.stdout.write(':')
+        }
+        else if( (row + col) === n - 1){
+            process.stdout.write(':')
+        }
+        else if(row == input - 1 && col <= input){
+            process.stdout.write(':')
+        }
+        else if(  col == input + xCount && row !== input-1){
+            process.stdout.write('X')
+            xCount++
+          
+        }
+        
+        else{
+            process.stdout.write(' ')
+        }
+        
+    }
+    console.log('')
+}
